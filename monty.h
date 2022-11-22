@@ -51,7 +51,7 @@ void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number);
 void free_stack(stack_t **stack);
 
 /* opcode Prototypes */
-void mon_push(stack_t **stack, unsigned int nne_number);
+void mon_push(stack_t **stack, unsigned int line_number);
 void mon_pop(stack_t **stack, unsigned int line_number);
 void mon_pall(stack_t **stack, unsigned int line_number);
 void mon_pint(stack_t **stack, unsigned int line_number);
