@@ -7,6 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <unistd.h>
+#include <ctype.h>
+#include <fcntl.h>
+#define UNUSED(x) (void)(x)
+
+char *argument[2];
 
 /* provided data structs */
 
@@ -49,6 +55,7 @@ int no_int_error(unsigned int line_number);
 /* Function Prototypes */
 void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number);
 void free_stack(stack_t **stack);
+void interpreter(char *instruction, unsigned int line_number, stack_t **stack);
 
 /* opcode Prototypes */
 void mon_push(stack_t **stack, unsigned int line_number);
@@ -58,6 +65,7 @@ void mon_pint(stack_t **stack, unsigned int line_number);
 void mon_swap(stack_t **stack, unsigned int line_number);
 void mon_add(stack_t **stack, unsigned int line_number);
 void mon_nop(stack_t **stack, unsigned int line_number);
-
+void mon_stack(stack_t **stack, unsigned int line_number);
+void mon_queue(stack_t **stack, unsigned int line_number);
 
 #endif
