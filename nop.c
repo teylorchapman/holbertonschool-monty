@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
-* nop - does nothing
+* mon_nop - does nothing
 * @stack: linked list stack that doesn't do anything
 * @line_number: current line number of bytecode file
 */

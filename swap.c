@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
-* swap - swaps the top two elements of a stack
+* mon_swap - swaps the top two elements of a stack
 * @stack: linked list stack to swap
 * @line_number: current line number of the bytecode file
 */
