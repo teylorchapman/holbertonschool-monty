@@ -10,9 +10,6 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <fcntl.h>
-#define UNUSED(x) (void)(x)
-
-char *argument[2];
 
 /* provided data structs */
 
@@ -46,7 +43,7 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/* Error message prototypes */
+/* error.c prototypes */
 int usage_error(void);
 int file_open_error(char *filename);
 int unknown_instruct_error(char *opcode, unsigned int line_number);
@@ -56,6 +53,9 @@ int no_int_error(unsigned int line_number);
 void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number);
 void free_stack(stack_t **stack);
 void interpreter(char *instruction, unsigned int line_number, stack_t **stack);
+int string_number(char *string);
+int main(int argc, char **argv);
+char *input;
 
 /* opcode Prototypes */
 void mon_push(stack_t **stack, unsigned int line_number);
@@ -65,7 +65,5 @@ void mon_pint(stack_t **stack, unsigned int line_number);
 void mon_swap(stack_t **stack, unsigned int line_number);
 void mon_add(stack_t **stack, unsigned int line_number);
 void mon_nop(stack_t **stack, unsigned int line_number);
-void mon_stack(stack_t **stack, unsigned int line_number);
-void mon_queue(stack_t **stack, unsigned int line_number);
 
 #endif
