@@ -1,8 +1,8 @@
 #include "monty.h"
 
 /**
-* add - adds the first two elements of a stack
-* replaces both with sum
+* add - adds the first two elements of a stack replaces 
+* both with sum
 * @stack: linked list stack to add
 * @line_number: current line number of bytecode file
 */
