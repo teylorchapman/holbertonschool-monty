@@ -65,5 +65,6 @@ void mon_pint(stack_t **stack, unsigned int line_number);
 void mon_swap(stack_t **stack, unsigned int line_number);
 void mon_add(stack_t **stack, unsigned int line_number);
 void mon_nop(stack_t **stack, unsigned int line_number);
+void free_list(stack_t *stack);
 
 #endif

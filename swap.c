@@ -13,6 +13,7 @@ int temp = (*stack)->n;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+free_list(*stack);
 exit(EXIT_FAILURE);
 }
 (*stack)->n = (*stack)->next->n;

@@ -20,12 +20,12 @@ void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number)
 	};
 	unsigned int i;
 
-	for (i = 0; opcode_funcs[i].f != NULL; i++)
-	{
-	  if (strcmp(opcode, opcode_funcs[i].opcode))
-		return (opcode_funcs[i].f);
-	}
-	return (opcode_funcs->f);
+for (i = 0; opcode_funcs[i].f != NULL; i++)
+{
+if (strcmp(opcode, opcode_funcs[i].opcode))
+return (opcode_funcs[i].f);
+}
+return (opcode_funcs->f);
 
 }
 
@@ -40,7 +40,7 @@ void mon_push(stack_t **stack, unsigned int line_number)
 	(void) line_number;
 
 	node = malloc(sizeof(stack_t));
-	if (!node)
+if (!node)
 	{
 	  fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
