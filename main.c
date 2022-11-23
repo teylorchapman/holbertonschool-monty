@@ -69,6 +69,8 @@ void free_stack(stack_t **stack)
  * main - reads lines and runs opcode
  * @argc: number of arguments
  * @argv: given arguments
+ *
+ * Return: success or fail
  */
 int main(int argc, char **argv)
 {
