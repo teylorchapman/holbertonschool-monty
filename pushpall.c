@@ -22,10 +22,11 @@ void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number)
 
 for (i = 0; opcode_funcs[i].f != NULL; i++)
 {
-if (strcmp(opcode, opcode_funcs[i].opcode))
+if (strcmp(opcode, opcode_funcs[i].opcode) == 0)
 return (opcode_funcs[i].f);
 }
 return (opcode_funcs->f);
+
 
 }
 
@@ -39,23 +40,23 @@ void mon_push(stack_t **stack, unsigned int line_number)
 	stack_t *node = NULL;
 	(void) line_number;
 
-	node = malloc(sizeof(stack_t));
+node = malloc(sizeof(stack_t));
 if (!node)
-	{
-	  fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
+{
+fprintf(stderr, "Error: malloc failed\n");
+exit(EXIT_FAILURE);
+}
 
-	node->prev = node->next = NULL;
+node->prev = node->next = NULL;
 
-	if (!(*stack))
-		(*stack) = node;
-	else
-	{
-		(*stack)->prev = node;
-		node->next = *stack;
-		*stack = node;
-	}
+if (!(*stack))
+(*stack) = node;
+else
+{
+(*stack)->prev = node;
+node->next = *stack;
+*stack = node;
+}
 }
 
 /**
