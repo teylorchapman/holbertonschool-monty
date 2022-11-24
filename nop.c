@@ -8,6 +8,6 @@
 
 void mon_nop(stack_t **stack, unsigned int line_number)
 {
-stack = stack;
-line_number = line_number;
+	stack = stack;
+	line_number = line_number;
 }
