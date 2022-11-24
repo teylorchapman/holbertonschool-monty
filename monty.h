@@ -10,6 +10,9 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#define VALID 1
 
 /* provided data structs */
 
@@ -43,19 +46,17 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/* error.c prototypes */
-int usage_error(void);
-int file_open_error(char *filename);
-int unknown_instruct_error(char *opcode, unsigned int line_number);
-int no_int_error(unsigned int line_number);
-
 /* Function Prototypes */
-void (*get_opcode_func(char *opcode))(stack_t**, unsigned int line_number);
+void get_opcode_func(char *fun, unsigned int line_number, stack_t **stack);
 void free_stack(stack_t **stack);
-void interpreter(char *instruction, unsigned int line_number, stack_t **stack);
 int string_number(char *string);
 int main(int argc, char **argv);
+void line_reader(char *line, unsigned int line_number, stack_t **stack);
+int digits(char *input);
 char *input;
+void print_error(char *line, unsigned int line_number);
+int is_string_number(char *string);
+int valid(char *fun);
 
 /* opcode Prototypes */
 void mon_push(stack_t **stack, unsigned int line_number);

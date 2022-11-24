@@ -1,46 +1,62 @@
 #include "monty.h"
 
 /**
- * interpreter - interprets and executes monty byte code
- * @instruction: instruction to interpret
- * @line_number: line number
- * @stack: the stack
+ * line_reader - intrepets the line
+ * @line: string with line to read
+ * @line_number: number of line
+ * @stack: pointer to the stack head
  */
-void interpreter(char *instruction, unsigned int line_number, stack_t **stack)
+void line_reader(char *line, unsigned int line_number, stack_t **stack)
 {
-	char *opcode;
-	char *p;
-	int flag = 0;
+	char *fun, *p;
+	int i, flag = 0;
 
-	opcode = strtok(instruction, " \n\t");
-	if (opcode != NULL)
+	fun = strtok(line, " \t\n");
+	if (fun != NULL)
 	{
-		input = strtok(NULL, " \n\t");
+		input = strtok(NULL, " \t\n");
+		i = valid(fun);
 		p = input;
-		flag = string_number(p);
-		if (strcmp(opcode, "push") == 0 && (!input || flag == 1))
+		flag = is_string_number(p);
+		if (strcmp(fun, "push") == 0 && (!input || flag == 1))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			free_stack(stack);
 			stack = NULL;
-			free(instruction);
-			instruction = NULL;
+			free(line);
+			line = NULL;
 			exit(EXIT_FAILURE);
 		}
+		else if (i != VALID)
+		{
+			print_error(line, line_number);
+			free_stack(stack);
+			stack = NULL;
+			free(line);
+			line = NULL;
+			exit(EXIT_FAILURE);
+		}
+		else
+			get_opcode_func(fun, line_number, stack);
 	}
 }
 
 /**
- * string_number - sees if string is a number
+ * is_string_number - sees if string is a number
  * @string: string
  *
  * Return: 0 or 1
  */
-int string_number(char *string)
+int is_string_number(char *string)
 {
 	while (string != NULL && *string != '\0')
 	{
 		if (*string == '-')
+		{
+			if (isdigit(*(string + 1)) == 0 && string--)
+				return (1);
+		}
+		else if (*string != '-' && isdigit(*string) == 0)
 			return (1);
 		string++;
 	}
@@ -53,55 +69,40 @@ int string_number(char *string)
  */
 void free_stack(stack_t **stack)
 {
-	stack_t *p, *tmp;
+	if (!(stack) || !(*stack))
+		return;
 
-	p = *stack;
-	while (p)
-	{
-		tmp = p;
-		p = p->next;
-		free(tmp);
-		tmp = NULL;
-	}
+	free_stack(&((*stack)->next));
+	free(*stack);
+	*stack = NULL;
 }
 
 /**
- * main - reads lines and runs opcode
- * @argc: number of arguments
- * @argv: given arguments
- *
- * Return: success or fail
+ * print_error - prints error
+ * @line: string with line
+ * @line_number: number of line
  */
-int main(int argc, char **argv)
+void print_error(char *line, unsigned int line_number)
 {
-	FILE *fp;
-	size_t size;
-	char *instruction;
-	stack_t *stack = NULL;
-	unsigned int line_number = 1;
+	(void)line;
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, line);
+}
 
-	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
+/**
+ * valid - checks syntax
+ * @fun: name of function that can be push
+ *
+ * Return: 0 or 1
+ */
+int valid(char *fun)
+{
+	char name[][10] = {"push", "pall", "pint", "pop", "nop", "swap", "add", ""};
+	unsigned int i;
 
-	instruction = NULL;
-	size = 0;
-	fp = fopen(argv[1], "r");
-	if (fp == NULL)
+	for (i = 0; name[i][0] != '\0'; i++)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		if (strcmp(name[i], fun) == 0)
+			return (1);
 	}
-	while (getline(&instruction, &size, fp) != -1)
-	{
-		interpreter(instruction, line_number, &stack);
-		line_number++;
-	}
-	free_stack(&stack);
-	free(instruction);
-	instruction = NULL;
-	fclose(fp);
 	return (0);
 }

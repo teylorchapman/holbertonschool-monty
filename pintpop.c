@@ -23,7 +23,7 @@ void mon_pint(stack_t **stack, unsigned int line_number)
  */
 void mon_pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *node;
+	stack_t *ptr;
 	(void) line_number;
 
 	if (!stack || !(*stack))
@@ -32,15 +32,9 @@ void mon_pop(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node = *stack;
-
-	if ((*stack)->next)
-	{
-		*stack = (*stack)->next;
-		(*stack)->prev = NULL;
-	}
-	else
-		*stack = NULL;
-
-	free(node);
+	ptr = *stack;
+	*stack = ptr->next;
+	if (ptr->next != NULL)
+		ptr->next->prev = NULL;
+	free(ptr);
 }
