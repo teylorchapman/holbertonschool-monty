@@ -69,12 +69,16 @@ int is_string_number(char *string)
  */
 void free_stack(stack_t **stack)
 {
-	if (!(stack) || !(*stack))
-		return;
+	stack_t *p, *t;
 
-	free_stack(&((*stack)->next));
-	free(*stack);
-	*stack = NULL;
+	p = *stack;
+	while (p)
+	{
+		t = p;
+		p = p->next;
+		free(t);
+		t = NULL;
+	}
 }
 
 /**

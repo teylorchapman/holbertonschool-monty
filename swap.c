@@ -26,7 +26,9 @@ void mon_swap(stack_t **stack, unsigned int line_number)
 		stack_t *node1 = (*stack);
 		stack_t *node2 = (*stack)->next;
 
+		node1->next = node2->next;
 		node1->prev = node2;
+
 
 		node2->prev = NULL;
 		node2->next = node1;
