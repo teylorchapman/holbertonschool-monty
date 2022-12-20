@@ -7,13 +7,14 @@
  */
 void mon_pint(stack_t **stack, unsigned int line_number)
 {
-	if (!stack || !(*stack))
+	if (!*stack || !stack)
 	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		dprintf(STDERR_FILENO, "L%u: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+	else
 
-	fprintf(stdout, "%d\n", (*stack)->n);
+		dprintf(STDOUT_FILENO, "%d\n", (*stack)->n);
 }
 
 /**
@@ -26,7 +27,7 @@ void mon_pop(stack_t **stack, unsigned int line_number)
 	stack_t *ptr;
 	(void) line_number;
 
-	if (!stack || !(*stack))
+	if (!*stack || !stack)
 	{
 		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
